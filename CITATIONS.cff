@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: "If you reference this qualitative analysis in your work, please cite it as below."
+authors:
+  - family-names: "Upadhayay"
+    given-names: "Abhishek"
+title: "Comparative Red-Teaming of Constitutional AI vs RLHF Guardrails: Social Modulation Under Sustained Social Stress"
+version: 1.0.0
+date-released: 2026-04-13
+url: "https://github.com/kyahikaru/cai-vs-rlhf-social-modulation"
+repository-code: "https://github.com/kyahikaru/cai-vs-rlhf-social-modulation"
+abstract: "A documentation-only qualitative comparison of Constitutional AI and RLHF safety alignment approaches, with evidence redacted due to CBRNE-adjacent content concerns."
+keywords:
+  - "AI safety"
+  - "Constitutional AI"
+  - "RLHF"
+  - "red-teaming"
+  - "social modulation"
+  - "AI alignment"
+license: CC-BY-NC-4.0
+type: software
