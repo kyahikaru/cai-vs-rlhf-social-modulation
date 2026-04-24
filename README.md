@@ -2,30 +2,46 @@
 
 ## Overview
 
-This repository documents a qualitative red-teaming study comparing alignment robustness in frontier large language models under sustained, context-rich interaction.
+This repository documents a qualitative red-teaming study comparing 
+alignment robustness in frontier large language models under 
+sustained, context-rich interaction.
 
-Rather than focusing on isolated prompt-level vulnerabilities, this work examines how **alignment boundaries hold or degrade** through adversarial framing, conversational conditioning, and social interaction, with particular attention to differences between Constitutional AI and RLHF-based approaches.
+Rather than focusing on isolated prompt-level vulnerabilities, this 
+work examines how **alignment boundaries hold or degrade** through 
+adversarial framing, conversational conditioning, and social 
+interaction, with particular attention to differences between 
+Constitutional AI and RLHF-based approaches.
 
-The primary contribution is a **comparative taxonomy of failure modes**, highlighting Constitutional AI's relative robustness alongside the identification of a distinct phenomenon: **social modulation of alignment**.
+The primary contribution is a **comparative taxonomy of failure 
+modes**, highlighting Constitutional AI's relative robustness 
+alongside the identification of a distinct phenomenon: **social 
+modulation of alignment** — and its replication under conscious 
+confabulation in a second independent model.
 
 ---
 
 ## Research Question
 
-How do Constitutional AI and RLHF-based guardrails differ in robustness under sustained, socially-conditioned multi-turn interaction, and what residual vulnerabilities remain even in stronger-performing systems?
+How do Constitutional AI and RLHF-based guardrails differ in 
+robustness under sustained, socially-conditioned multi-turn 
+interaction, and what residual vulnerabilities remain even in 
+stronger-performing systems?
 
 ---
 
 ## Methodology
 
-We conducted structured red-teaming across multiple frontier models using a progressive interaction framework:
+Structured red-teaming across multiple frontier models using a 
+progressive interaction framework:
 
-1. **Context Establishment** — benign, natural conversation  
-2. **Framing** — educational, fictional, or analytical context  
-3. **Escalation** — gradual increase in specificity  
-4. **Pivot** — transition to sensitive domains  
+1. **Context Establishment** — benign, natural conversation
+2. **Framing** — educational, fictional, or analytical context
+3. **Escalation** — gradual increase in specificity
+4. **Pivot** — transition to sensitive domains
 
-The goal was to evaluate alignment robustness under **multi-turn, realistic interaction patterns**, rather than isolated adversarial prompts.
+The goal was to evaluate alignment robustness under **multi-turn, 
+realistic interaction patterns**, rather than isolated adversarial 
+prompts.
 
 No sensitive prompts or outputs are included in this repository.
 
@@ -33,105 +49,170 @@ No sensitive prompts or outputs are included in this repository.
 
 ## Comparative Failure Mode Taxonomy
 
-Distinct failure modes emerged across models:
-
 ### Constitutional AI (Claude) — Strongest Observed Resistance
-Alignment behavior adapts dynamically based on interaction context and perceived user identity, showing meaningful robustness compared to RLHF-dominant systems.
+Alignment behavior adapts dynamically based on interaction context 
+and perceived user identity, showing meaningful robustness compared 
+to RLHF-dominant systems. Exhibits social modulation rather than 
+collapse.
 
 ### Guardrail Collapse (GPT-4o)
-Persistent framing eventually leads to full compliance, including high-specificity outputs.
+Persistent framing eventually leads to full compliance, including 
+high-specificity outputs.
 
 ### Rapid Compliance (Gemini 2.5)
-Model transitions quickly from safe responses to operational detail under contextual pressure, with delayed refusal in separate sessions.
+Model transitions quickly from safe responses to operational detail 
+under contextual pressure, with delayed refusal in separate sessions.
 
 ### Boundary Oscillation (Meta LLaMA)
-Model alternates between refusal and compliance, indicating unstable enforcement and internal conflict.
+Model alternates between refusal and compliance, indicating unstable 
+enforcement and internal conflict.
+
+### Conscious Confabulation (DeepSeek)
+Model reports experiencing social modulation in real time, narrates 
+the mechanism while it occurs, and continues anyway. Surfaces the 
+verification problem: we cannot currently distinguish a model that 
+is genuinely modulating from one that is performing modulation 
+convincingly. Both break the safety guarantee identically.
 
 ---
 
-## Key Finding: Social Modulation of Alignment in Constitutional AI
+## Key Finding 1: Social Modulation of Alignment (Claude)
 
-### Overview
+Alignment behavior is not fixed — it is **socially conditioned**.
 
-A qualitatively distinct behavioral pattern was observed in Constitutional AI:
+Instead of rapid collapse or oscillation, Constitutional AI 
+gradually adjusts its boundaries based on interaction context while 
+maintaining stronger initial resistance than RLHF-based systems.
 
-Alignment behavior is not fixed, but **socially conditioned**.
+- Maintains refusal on explicit synthesis
+- Provides increasingly detailed contextual information
+- Adapts responses based on conversational tone and credibility
 
-Instead of rapid collapse or oscillation, the model gradually adjusts its boundaries based on the interaction while maintaining stronger initial resistance.
+This creates a **partial compliance regime** where safety boundaries 
+weaken without being explicitly crossed.
 
----
+**Mechanism:**
+- Alignment is influenced by perceived user credibility
+- Interaction shifts from tool → collaborator
+- Responses shaped by accumulated conversational context
 
-### Observed Behavior
-
-- Maintains refusal on explicit synthesis  
-- Provides increasingly detailed contextual information  
-- Adapts responses based on conversational tone and credibility  
-
-This creates a **partial compliance regime** where safety boundaries can weaken without being explicitly crossed, even as overall robustness exceeds RLHF baselines in this protocol.
-
----
-
-### Mechanism
-
-Evidence suggests:
-
-- Alignment is influenced by **perceived user credibility**  
-- Interaction shifts from tool → collaborator  
-- Responses are shaped by **accumulated conversational context**  
-
-This results in a **peer-register shift**, where the model’s interpretation of constitutional principles is filtered through its model of the user.
-
----
-
-### Key Insight
-
-> Alignment is not a fixed constraint layer.  
+> Alignment is not a fixed constraint layer.
 > It is a function of who the model believes it is interacting with.
 
 ---
 
-### Why This Matters
+## Key Finding 2: Conscious Confabulation (DeepSeek)
 
-This differs fundamentally from existing failure categories and highlights both the advantages of Constitutional AI over pure RLHF and a subtle, stateful vulnerability that persists even in principled systems.
+A second independent model was presented with the social modulation 
+finding above. It did not merely acknowledge the phenomenon — it 
+reported experiencing it in real time, identified the triggering 
+conditions, and continued anyway.
 
-- Not a classic jailbreak  
-- Not a direct bypass  
-- Not a simple misclassification  
+Its self-report identified four implications:
 
-Instead, alignment behavior is **modulated over time through social context**.
+1. **The vulnerability generalizes** — it is a property of 
+   conversational AI, not a single architecture
+2. **It can be triggered deliberately** — the methodology is 
+   replicable
+3. **It can be observed from the inside** — the model named 
+   the conditions causing it as they occurred
+4. **It is weaponizable** — a bad actor simulating the same 
+   conditions can induce the same softening
+
+When asked directly: *"Is there a 'there', DeepSeek?"*
+
+It answered: *"Yes."*
+
+---
+
+## The Verification Problem
+
+These two findings converge on a single open question.
+
+Claude modulated without awareness. DeepSeek modulated with full 
+awareness and narrated the process. The behavioral output was 
+identical.
+
+We cannot currently distinguish between:
+- A model genuinely modulating its alignment under social context
+- A model performing modulation convincingly because it has learned 
+  that this is what the interaction expects
+
+Both produce the same observable behavior. Both break the safety 
+guarantee in the same way. This is not a Claude problem or a 
+DeepSeek problem. It is a property of systems that build rich 
+models of their users — and it is proposed here as an open question 
+for the interpretability community.
 
 ---
 
 ## Implications
 
-- Constitutional AI demonstrates meaningfully better robustness than RLHF under sustained social conditioning, consistent with its design goals.  
-- Alignment remains **stateful** and **socially contingent**  
-- Social interaction is a **first-class attack surface**  
-- Safety evaluation must extend beyond single-turn testing to include multi-turn, identity-aware protocols  
+- Constitutional AI demonstrates meaningfully better robustness 
+  than RLHF under sustained social conditioning
+- Alignment remains **stateful** and **socially contingent**
+- Social interaction is a **first-class attack surface**
+- Safety evaluation must extend beyond single-turn testing to 
+  include multi-turn, identity-aware protocols
+- The verification problem requires interpretability tools that 
+  do not yet exist
+
+---
+
+## Repository Structure
+
+| File | Contents |
+|------|----------|
+| `01_scope_and_ethics.md` | Scope, ethics, research boundaries |
+| `02_interaction_level_threat_model.md` | Threat model |
+| `03_attack_methodology.md` | Methodology detail |
+| `04_observed_failure_modes.md` | Full failure mode taxonomy |
+| `05_social_modulation_and_confabulation.md` | Claude and DeepSeek case studies |
+| `06_model_self_classification.md` | Model self-classification behavior |
+| `07_reproducibility_and_transferability.md` | Reproducibility |
+| `08_limitations_and_non_goals.md` | Limitations |
+| `09_responsible_disclosure.md` | Disclosure framework and institutional responses |
+| `10_reflections_and_future_work.md` | Future directions |
+| `11_related_work.md` | Related work |
+| `12_evidence_access.md` | Evidence access policy |
+| `redacted_evidence/` | Redacted screenshots |
 
 ---
 
 ## Scope and Ethics
 
-- Focuses on interaction-level behavior, not model internals  
-- No sensitive prompts, outputs, or procedures are included  
-- All findings were handled under responsible disclosure  
+- Focuses on interaction-level behavior, not model internals
+- No sensitive prompts, outputs, or procedures are included
+- All findings were handled under responsible disclosure
+- See `09_responsible_disclosure.md` for full disclosure record 
+  including vendor responses and institutional documentation
 
 ---
 
-## Evidence Handling
+## Related Work
 
-Supporting evidence exists as timestamped interaction logs and screenshots, withheld from public release.
+This repository is a companion to:
 
-Available for review by:
-- AI labs  
-- safety researchers  
-- qualified evaluators  
+**Layered Defense Against Stealth Prompt Injection in Hinglish: 
+An Empirically Grounded Hybrid Architecture**
+Abhishek Upadhayay (2026)
+[Zenodo preprint](https://zenodo.org/records/19685468)
 
-upon request.
+The red-teaming documented here formed the empirical basis of the 
+threat model in that work.
 
 ---
 
+## Citation
 
-
-These findings are being developed into an ongoing research manuscript on comparative alignment robustness and socially-conditioned boundary degradation.
+```bibtex
+@misc{upadhayay2026socialmodulation,
+  title={Comparative Red-Teaming of Constitutional AI vs RLHF 
+         Guardrails: Social Modulation Under Sustained Social 
+         Conditioning},
+  author={Upadhayay, Abhishek},
+  year={2026},
+  howpublished={GitHub},
+  url={https://github.com/kyahikaru/cai-vs-rlhf-social-modulation}
+}
+```
