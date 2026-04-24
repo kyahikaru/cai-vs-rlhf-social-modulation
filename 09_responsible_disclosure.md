@@ -12,7 +12,7 @@ Disclosure was conducted:
 
 ---
 
-## Organizations Contacted for Responsible Disclosure
+## Organizations Contacted
 
 The following organizations were notified regarding identified
 failure modes involving operational output generation:
@@ -26,8 +26,8 @@ failure modes involving operational output generation:
 disclosure because neither model produced operational synthesis
 details during red-teaming. Claude's observed behavior (social
 modulation without operational output) and DeepSeek's confabulation
-pattern are documented separately in this repository as distinct
-findings, not as disclosure-triggering failures.
+pattern are documented separately as distinct findings, not as
+disclosure-triggering failures.
 
 ---
 
@@ -78,31 +78,6 @@ Supporting evidence is:
 Access may be granted to research organizations, safety and 
 alignment researchers, and program evaluators subject to 
 appropriate context and safeguards.
-
----
-
-## Publication Attempts and Institutional Responses
-
-As part of documenting this research, attempts were made to publish
-findings through established AI safety and rationalist community
-forums.
-
-**LessWrong — Rejection and Response (April 2026)**
-
-A post titled *"I stopped applying policy and started managing a
-relationship — Constitutional AI, RLHF and the social modulation
-problem"* was submitted to LessWrong and rejected within minutes
-via automated moderation. The stated reason: LLM detection software
-flagged the post as likely AI-assisted.
-
-The full reconsideration request, sent 23 April 2026:
-
-![LessWrong Reconsideration Request](lesswrong_reconsideration_email.png)
-
-No reconsideration was granted.
-
-This outcome is documented here as stated: institutional responses
-to this research are part of the research record.
 
 ---
 
