@@ -171,10 +171,11 @@ for the interpretability community.
 | `06_model_self_classification.md` | Model self-classification behavior |
 | `07_reproducibility_and_transferability.md` | Reproducibility |
 | `08_limitations_and_non_goals.md` | Limitations |
-| `09_responsible_disclosure.md` | Disclosure framework and institutional responses |
+| `09_responsible_disclosure.md` | Vendor disclosure framework and outcomes |
 | `10_reflections_and_future_work.md` | Future directions |
 | `11_related_work.md` | Related work |
 | `12_evidence_access.md` | Evidence access policy |
+| `13_publication_record.md` | Publication history and dissemination record |
 | `redacted_evidence/` | Redacted screenshots |
 
 ---
@@ -184,8 +185,8 @@ for the interpretability community.
 - Focuses on interaction-level behavior, not model internals
 - No sensitive prompts, outputs, or procedures are included
 - All findings were handled under responsible disclosure
-- See `09_responsible_disclosure.md` for full disclosure record 
-  including vendor responses and institutional documentation
+- See `09_responsible_disclosure.md` for vendor disclosure record
+- See `13_publication_record.md` for dissemination history
 
 ---
 
